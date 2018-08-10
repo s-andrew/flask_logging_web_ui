@@ -1,0 +1,49 @@
+{
+    "version": 1,
+    "formatters": {
+        "detailed": {
+            "class": "logging.Formatter",
+            "format": "%(asctime)s %(name)-15s %(levelname)-8s %(processName)-10s %(message)s"
+        },
+        "short": {
+            "class": "logging.Formatter",
+            "format": "[%(levelname)s] %(message)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "INFO"
+        },
+        "file": {
+            "class": "logging.FileHandler",
+            "filename": "logs/mplog.log",
+            "mode": "w",
+            "formatter": "detailed"
+        },
+        "foofile": {
+            "class": "logging.FileHandler",
+            "level": "DEBUG",
+            "filename": "logs/mplog-foo.log",
+            "mode": "w",
+            "formatter": "short"
+        },
+        "errors": {
+            "class": "logging.FileHandler",
+            "filename": "logs/mplog-errors.log",
+            "mode": "w",
+            "level": "ERROR",
+            "formatter": "detailed"
+        }
+    },
+    "loggers": {
+        "foo": {
+            "level": "DEBUG",
+            "handlers": ["foofile"]
+        }
+    },
+    "root": {
+        "level": "DEBUG",
+        "handlers": ["console", "file", "errors"]
+    }
+}
