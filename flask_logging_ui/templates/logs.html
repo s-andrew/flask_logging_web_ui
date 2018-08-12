@@ -1,54 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Logs</title>
+  <head>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="static/bootstrap.min.css">
     <link rel="stylesheet" href="static/bootstrap-flex.min.css">
     <script src="static/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="static/style.css">
-</head>
-<body>
-    <table class="table table-hover table-bordered table-dark">
-        <thead class="thead-light">
-        <th scope="col">TimeStamp</th>
-        <th scope="col">Source</th>
-        <th scope="col">LogLevel</th>
-        <th scope="col">LogLevelName</th>
-        <th scope="col">Message</th>
-        <th scope="col">Args</th>
-        <th scope="col">Module</th>
-        <th scope="col">FuncName</th>
-        <th scope="col">LineNo</th>
-        <th scope="col">Exception</th>
-        <th scope="col">Process</th>
-        <th scope="col">Thread</th>
-        <th scope="col">ThreadName</th>
-        </thead>
-        <tbody>
-        {% for row in logs %}
-        <tr
-                {% if row.LogLevel < 20 %} class="bg-secondary" {% endif %}
-                {% if row.LogLevel == 30 %} class="bg-warning" {% endif %}
-                {% if row.LogLevel >= 40 %} class="bg-danger" {% endif %}
-        >
-            <td>{{row.TimeStamp}}</td>
-            <td>{{row.Source}}</td>
-            <td>{{row.LogLevel}}</td>
-            <td>{{row.LogLevelName}}</td>
-            <td>{{row.Message}}</td>
-            <td>{{row.Args}}</td>
-            <td>{{row.Module}}</td>
-            <td>{{row.FuncName}}</td>
-            <td>{{row.LineNo}}</td>
-            <td>{{row.Exception}}</td>
-            <td>{{row.Process}}</td>
-            <td>{{row.Thread}}</td>
-            <td>{{row.ThreadName}}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-</body>
+    <title>LogsSpa</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="static/build.js"></script>
+  </body>
 </html>

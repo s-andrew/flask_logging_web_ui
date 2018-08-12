@@ -6,12 +6,12 @@ __version__ = "0.1.0"
 
 
 initial_sql = """CREATE TABLE IF NOT EXISTS log(
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
                     TimeStamp TEXT,
                     Source TEXT,
                     LogLevel INT,
                     LogLevelName TEXT,
                     Message TEXT,
-                    Args TEXT,
                     Module TEXT,
                     FuncName TEXT,
                     LineNo INT,
@@ -27,7 +27,6 @@ insertion_sql = """INSERT INTO log(
                     LogLevel,
                     LogLevelName,
                     Message,
-                    Args,
                     Module,
                     FuncName,
                     LineNo,
@@ -36,7 +35,7 @@ insertion_sql = """INSERT INTO log(
                     Thread,
                     ThreadName
                )
-               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                """
 
 
@@ -68,8 +67,7 @@ class SQLiteHandler(logging.Handler):
             d['name'],
             d['levelno'],
             d['levelname'],
-            d['msg'],
-            str(d['args']),
+            d['msg'] % d['args'],
             d['module'],
             d['funcName'],
             d['lineno'],

@@ -10,14 +10,23 @@ def dict_factory(cursor, row):
     return d
 
 
-def get_logs_from_sqlite(db):
+def get_logs(db):
     with sqlite3.connect(db) as conn:
         conn.row_factory = dict_factory
         cursor = conn.cursor()
-        cursor.execute('SELECT * FROM log ORDER BY TimeStamp DESC;')
+        cursor.execute('SELECT * FROM log ORDER BY Id DESC, TimeStamp DESC LIMIT 1000;')
         logs = cursor.fetchall()
         cursor.close()
     return logs
+
+
+def get_headers(db):
+    with sqlite3.connect(db) as conn:
+        cursor = conn.cursor()
+        cursor.execute('SELECT * FROM log LIMIT 0;')
+        headers = tuple(map(lambda x: x[0], cursor.description))
+        cursor.close()
+    return headers
 
 
 def logging_blueprint_factory(db='app.db'):
@@ -25,21 +34,14 @@ def logging_blueprint_factory(db='app.db'):
 
     @logging_blueprint.route('/')
     def logs():
-        logs = get_logs_from_sqlite(db)
-        return render_template('logs.html', logs=logs)
+        return render_template('logs.html')
 
     @logging_blueprint.route('/api')
     def api():
-        logs = get_logs_from_sqlite(db)
-        return jsonify(logs)
+        return jsonify(get_logs(db))
 
     @logging_blueprint.route('/api/headers')
     def headers():
-        with sqlite3.connect(db) as conn:
-            cursor = conn.cursor()
-            cursor.execute('SELECT * FROM log LIMIT 0;')
-            headers = tuple(map(lambda x: x[0], cursor.description))
-            cursor.close()
-        return jsonify(headers)
+        return jsonify(get_headers(db))
 
     return logging_blueprint
