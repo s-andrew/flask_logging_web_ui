@@ -6,7 +6,7 @@ from flask import Flask
 from flask_cors import CORS
 
 from flask_logging_ui import flask_logging_ui
-from busines_logic import BusinesLogic
+from bussines_logic import BusinesLogic
 
 
 with open('config/logging.json') as file:
@@ -16,7 +16,7 @@ logging.config.dictConfig(log_config)
 
 def flask_app_factory():
     app = Flask(__name__)
-    flask_logging_ui(app, db='logs/app.db', url_prefix='/logs')
+    flask_logging_ui(app, db='logs/app.db', url_prefix='/logs', logger=logging.getLogger())
     CORS(app)
     bl = BusinesLogic()
 

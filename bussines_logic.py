@@ -6,9 +6,12 @@ class BusinesLogic:
 
     def do(self, l):
         self.logger.debug('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Maxime, modi praesentium. Culpa distinctio dolore dolorum enim, exercitationem fugit incidunt inventore iure rem soluta. Consectetur consequuntur esse eveniet impedit iure praesentium quis reiciendis tempore, veritatis! Adipisci architecto atque consectetur culpa dolores inventore iste iusto, nesciunt officiis, optio quis rem temporibus veniam.')
-        for i in l:
+        iterator = iter(l)
+        while True:
             try:
-                print(1/i)
-                self.logger.info('print %s' % str(i))
+                i = 1/next(iterator)
+            except StopIteration:
+                self.logger.exception('Stop iterator')
+                break
             except ZeroDivisionError:
-                self.logger.exception('kek zero division')
+                self.logger.critical('Zero division bitch!!!', exc_info=True)
